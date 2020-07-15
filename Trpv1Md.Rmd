@@ -1,0 +1,29 @@
+---
+title: "Trpv1Md"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Read the data from TRPV1 file
+### Extract low associations and export new file
+```{r loadandwrite, include=TRUE}
+## read trpv1 file
+trpv1 <- read.delim("~/mydemo/trpv1.tsv", header=FALSE)
+##extract low quality associations with combined score <0.5
+trpv1.low <- trpv1[trpv1$V15<0.5, c(1,2,15),drop=FALSE]
+trpv1.high <- trpv1[trpv1$V15>0.5, c(1,2,15),drop=FALSE]
+## save files
+write.csv(trpv1.low, "trpv1 - low associations.csv")
+write.csv(trpv1.high, "trpv1 - high associations.csv")
+```
+
+### Show low associations:
+```{r output, include=TRUE}
+print(trpv1.low)
+```
